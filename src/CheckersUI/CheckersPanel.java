@@ -19,8 +19,6 @@ public class CheckersPanel extends JPanel {
     final static String BLACK_PAWN = "/assets/black_pawn.png";
     final static String WHITE_PAWN = "/assets/white_pawn.png";
     final static String BOARD = "/assets/board.png";
-    final static String BOARD_1 = "/assets/board1.png";
-    final static String BOARD_2 = "/assets/board2.png";
     final static String WHITE_KING = "/assets/white_pawn_king.png";
     final static String BLACK_KING = "/assets/black_pawn_king.png";
     final static String GREEN_INDICATOR = "/assets/green_indicator.png";
@@ -33,25 +31,23 @@ public class CheckersPanel extends JPanel {
     ArrayList<Point> allBoardPoints = new ArrayList<>();
     ArrayList<Integer> possiblemovesindex = new ArrayList<>();
     ArrayList<Integer> bestmovesfromhelp = new ArrayList<>();
-    
+
     Board boardO = new Board();
     String turn = "your turn";
     String user_move = "";
     String computer_move = "";
     int theme = 1;
-    
+
 
     public CheckersPanel() {
 
         // initialiser le damier
         initAllpositions();
-        // les images 
+        // les images
         black_pawn = new ImageIcon(getClass().getResource(BLACK_PAWN));
         white_pawn = new ImageIcon(getClass().getResource(WHITE_PAWN));
         board = new ImageIcon(getClass().getResource(BOARD));
         indicatePosition = new ImageIcon(getClass().getResource(GREEN_INDICATOR));
-        board1 = new ImageIcon(getClass().getResource(BOARD_1));
-        board2 = new ImageIcon(getClass().getResource(BOARD_2));
         white_king = new ImageIcon(getClass().getResource(WHITE_KING));
         black_king = new ImageIcon(getClass().getResource(BLACK_KING));
         boardO.initialize();
@@ -82,7 +78,7 @@ public class CheckersPanel extends JPanel {
         }
     }
 
-    
+
     private void initAllpositions() {
         int lignes = 0;
         for (int i = 0; i < 32; i++) {
@@ -172,8 +168,8 @@ public class CheckersPanel extends JPanel {
         }
 
     }
-   
-    
+
+
     public Pawn getPawnOfPosition(int pos) {
 
         for (Pawn p : pawns) {
