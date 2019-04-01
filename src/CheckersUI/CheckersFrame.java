@@ -14,8 +14,6 @@ import java.applet.AudioClip;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
-//import java.awt.HeadlessException;
-//import java.awt.MenuItem;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -25,32 +23,15 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-//import java.io.File;
-//import java.io.FileInputStream;
-//import java.io.FileNotFoundException;
-//import java.io.FileOutputStream;
-//import java.io.IOException;
-//import java.io.ObjectInputStream;
-//import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ArrayList;
-//import java.util.logging.Level;
-//import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
-//import javax.swing.JCheckBox;
-//import javax.swing.JComboBox;
-//import javax.swing.JComponent;
 import javax.swing.JFrame;
-//import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-//import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-//import javax.swing.JPasswordField;
 import javax.swing.JRadioButtonMenuItem;
-//import javax.swing.JTextField;
-//import javax.swing.event.MenuEvent;
-//import javax.swing.event.MenuListener;
+
 
 public class CheckersFrame extends JFrame implements MouseListener, MouseMotionListener, KeyListener {
 
@@ -60,12 +41,6 @@ public class CheckersFrame extends JFrame implements MouseListener, MouseMotionL
     private int clickedHere = 0;
     int FromPawnIndex = 0;
     int ToPawnIndex = 0;
-    //private static final int FROM = 1;
-    //private static final int TO = 2;
-    //private static final int FROM_MULTIPLE = 3;
-    //private static final int TO_MULTIPLE = 4;
-    //private static final int COMPUTER_THINKS = 5;
-    //private static final int NOT_STARTED = 6;
     private int userColor = CheckerPosition.WHITE;
     private int computerColor = CheckerPosition.BLACK;
     //private Coordinate from;
@@ -103,11 +78,6 @@ public class CheckersFrame extends JFrame implements MouseListener, MouseMotionL
         addMouseMotionListener(this);
         setVisible(true);
 
-        // URL url = this.getClass().getResource("/assets/musicBackground.wav");
-        // music = Applet.newAudioClip(url);
-        // if (playMusic) {
-        //     music.loop();
-        // }
     }
 
     public void createMenu() {
@@ -117,8 +87,8 @@ public class CheckersFrame extends JFrame implements MouseListener, MouseMotionL
         // create algorithms menu item
         JMenu algorithm = new JMenu("Algorithms");
         ButtonGroup algorithmGroup = new ButtonGroup(); // group for radio buttons
-        
-        JRadioButtonMenuItem rb_minimax = new JRadioButtonMenuItem("Minimax");        
+
+        JRadioButtonMenuItem rb_minimax = new JRadioButtonMenuItem("Minimax");
         rb_minimax.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -131,13 +101,13 @@ public class CheckersFrame extends JFrame implements MouseListener, MouseMotionL
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Alpha-beta prunning");
-                CheckersFrame.algorithm = 2; 
+                CheckersFrame.algorithm = 2;
             }
         });
         // add radio buttons to the group, to check only one of them
         algorithmGroup.add(rb_minimax);
         algorithmGroup.add(rb_alpha_beta);
-        // set one of the radio buttons checked 
+        // set one of the radio buttons checked
         if(CheckersFrame.algorithm == 1){
             rb_minimax.setSelected(true);
             rb_alpha_beta.setSelected(false);
@@ -155,42 +125,42 @@ public class CheckersFrame extends JFrame implements MouseListener, MouseMotionL
         JMenu difficulty = new JMenu("Difficulty");
         menuBar.add(difficulty);
         ButtonGroup difficultyGroup = new ButtonGroup(); // group for radio buttons
-        
-        JRadioButtonMenuItem hard_difficulty = new JRadioButtonMenuItem("Hard");        
+
+        JRadioButtonMenuItem hard_difficulty = new JRadioButtonMenuItem("Hard");
         hard_difficulty.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("hard_difficulty");
-                
+
             }
         });
-        
+
         JRadioButtonMenuItem medium_difficulty = new JRadioButtonMenuItem("Medium");
         medium_difficulty.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("medium_difficulty");
-                
+
             }
         });
-        
+
         JRadioButtonMenuItem easy_difficulty = new JRadioButtonMenuItem("Easy");
         easy_difficulty.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("easy_difficulty");
-                
+
             }
         });
         // add radio buttons to the group, to check only one of them
         difficultyGroup.add(hard_difficulty);
         difficultyGroup.add(medium_difficulty);
         difficultyGroup.add(easy_difficulty);
-        
+
         difficulty.add(hard_difficulty);
         difficulty.add(medium_difficulty);
         difficulty.add(easy_difficulty);
-        
+
         if(thinkDepth == 8){
             hard_difficulty.setSelected(true);
             medium_difficulty.setSelected(false);
@@ -205,196 +175,7 @@ public class CheckersFrame extends JFrame implements MouseListener, MouseMotionL
             medium_difficulty.setSelected(false);
             easy_difficulty.setSelected(true);
         }
-        // les styles & music
-        // JMenu options = new JMenu("Options");
-        // menuBar.add(options);
-        // // options
-        // JMenuItem styleAndMusic = new JMenuItem("Style And Music", null);
-        // styleAndMusic.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         System.out.println("styles And Music");
-        //         String[] themes = {"style 1", "style 2", "style 3"};
-        //         String[] Algorithems = {"MiniMax", "MiniMax AB"};
 
-        //         JCheckBox music = new JCheckBox("Music");
-        //         JComboBox ThemesCombo = new JComboBox(themes);
-
-        //         if (playMusic == true) {
-        //             music.setSelected(true);
-        //         } else {
-        //             music.setSelected(false);
-        //         }
-
-        //         if (pan.theme == 1) {
-        //             ThemesCombo.setSelectedIndex(0);
-        //         } else if (pan.theme == 2) {
-        //             ThemesCombo.setSelectedIndex(1);
-        //         } else if (pan.theme == 3) {
-        //             ThemesCombo.setSelectedIndex(2);
-        //         }
-        //         final JComponent[] inputs = new JComponent[]{
-        //             new JLabel("Theme "),
-        //             ThemesCombo,
-        //             new JLabel("ON/OFF music"), music
-        //         };
-        //         JOptionPane.showMessageDialog(CheckersFrame.this, inputs, "Styles and music ", JOptionPane.PLAIN_MESSAGE);
-
-        //         if (ThemesCombo.getSelectedItem().toString().equals("style 1")) {
-        //             pan.theme = 1;
-        //             pan.repaint();
-        //         } else if (ThemesCombo.getSelectedItem().toString().equals("style 2")) {
-        //             pan.theme = 2;
-        //             pan.repaint();
-        //         } else if (ThemesCombo.getSelectedItem().toString().equals("style 3")) {
-        //             pan.theme = 3;
-        //             pan.repaint();
-        //         }
-        //         if (music.isSelected()) {
-        //             playMusic = true;
-        //             CheckersFrame.music.loop();
-        //         } else {
-        //             playMusic = false;
-        //             CheckersFrame.music.stop();
-        //         }
-        //     }
-        // });
-        // JMenuItem backward = new JMenuItem("backward", null);
-        // backward.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         System.out.println("Do backward ");
-        //         System.out.println("The Current Position when i will Back " + currentPositionInBoradHistory);
-        //         if ((currentPositionInBoradHistory - (++nbrBack)) >= 0) {
-        //             isBack = true;
-        //             pan.boardO = boardHistory.get(currentPositionInBoradHistory - nbrBack);
-        //             currentPositionInBoradHistory = currentPositionInBoradHistory - nbrBack;
-        //             pan.repaint();
-        //             nbrBack = 0;
-        //         } else {
-        //             nbrBack = 0;
-        //         }
-        //     }
-        // });
-        // JMenuItem forward = new JMenuItem("forward", null);
-        // forward.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         System.out.println("Do forward ");
-        //         if (currentPositionInBoradHistory + (++nbrForward) < boardHistory.size()) {
-        //             pan.boardO = boardHistory.get(currentPositionInBoradHistory + nbrForward);
-        //             currentPositionInBoradHistory = currentPositionInBoradHistory + nbrForward;
-        //             nbrForward = 0;
-        //         }else {
-        //             nbrForward = 0;
-        //         }
-        //         pan.repaint();
-                
-        //     }
-        // });
-        // JMenuItem resetBoard = new JMenuItem("reset board", null);
-        // resetBoard.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         System.out.println("Do resetBoard ");
-        //          pan.pawns.clear();
-        //         pan.boardO.initialize();
-        //         boardHistory.clear();
-        //         currentPositionInBoradHistory = 0;
-        //         isBack = false;
-        //         pan.repaint();
-                
-        //     }
-        // });
-        // JMenuItem help = new JMenuItem("help", null);
-        // help.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         System.out.println("Do help ");
-
-        //             Board tmpBoard = null;
-        //             if (CheckersFrame.algorithm == 1) {
-        //                 tmpBoard = GameSearch.minimax(pan.boardO, thinkDepth, userColor);
-        //             } else {
-        //                 tmpBoard = GameSearch.minimaxAB(pan.boardO, thinkDepth, userColor, GameSearch.minusInfinityBoard(), GameSearch.plusInfinityBoard());
-        //             }
-
-        //             Move move = tmpBoard.getHistory().first().getNext();
-
-        //             pan.bestmovesfromhelp.add(move.getChecker().getPosition().get());
-        //             pan.bestmovesfromhelp.add(move.getDestination().get());
-        //             pan.repaint();
-        //     }
-        // });
-        // options.add(backward);
-        // options.add(forward);
-        // options.add(help);
-        // options.add(resetBoard);
-        // options.add(styleAndMusic);
-
-        // import
-        // JMenu importEport = new JMenu("import/export");
-        // menuBar.add(importEport);
-        // JMenuItem importGame = new JMenuItem("import game", null);
-        // importGame.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         System.out.println("import Game");
-
-        //         File folder = new File("savegames");
-        //         File[] listOfFiles = folder.listFiles();
-        //         int nbrfile = 0;
-        //         for (int i = 0; i < listOfFiles.length; i++) {
-        //             if (listOfFiles[i].isFile()) {
-        //                 nbrfile++;
-        //             }
-        //         }
-
-        //         String[] comboTypes = new String[nbrfile];
-
-        //         for (int i = 0; i < listOfFiles.length; i++) {
-        //             if (listOfFiles[i].isFile()) {
-        //                 comboTypes[i] = listOfFiles[i].getName();
-        //             } else if (listOfFiles[i].isDirectory()) {
-        //                 System.out.println("Directory " + listOfFiles[i].getName());
-        //             }
-        //         }
-
-        //         ArrayList<String> filename = new ArrayList<>();
-
-        //         JComboBox comboTypesList = new JComboBox(comboTypes);
-        //         final JComponent[] inputs = new JComponent[]{
-        //             new JLabel("Nom de fichier"),
-        //             comboTypesList
-        //         };
-        //         JOptionPane.showMessageDialog(CheckersFrame.this, inputs, "Import a game", JOptionPane.PLAIN_MESSAGE);
-        //         importGamefromSavegames(comboTypesList.getSelectedItem().toString());
-        //     }
-        // });
-        // JMenuItem exportGame = new JMenuItem("export game", null);
-        // exportGame.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         System.out.println("export Game");
-        //         JTextField fileName = new JTextField();
-        //         final JComponent[] inputs = new JComponent[]{
-        //             new JLabel("Nom de fichier"),
-        //             fileName
-        //         };
-        //         JOptionPane.showMessageDialog(CheckersFrame.this, inputs, "Export a game", JOptionPane.PLAIN_MESSAGE);
-        //         if(fileName.getText().toString().compareTo("")!=0){
-        //             try {
-        //                 SaveHistoryOfGame(fileName.getText().toString());
-        //             } catch (IOException ex) {
-        //                 Logger.getLogger(CheckersFrame.class.getName()).log(Level.SEVERE, null, ex);
-        //             }
-        //         }else{
-        //             System.out.println("no name file entred");
-        //         }
-        //     }
-        // });
-        // importEport.add(importGame);
-        // importEport.add(exportGame);
         this.setJMenuBar(menuBar);
     }
 
@@ -518,7 +299,7 @@ public class CheckersFrame extends JFrame implements MouseListener, MouseMotionL
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        
+
     }
 
     public void moveUser(Coordinate from, Coordinate to) {
@@ -587,7 +368,7 @@ public class CheckersFrame extends JFrame implements MouseListener, MouseMotionL
 
                             move = new MoveJump(checker, to);
                         }
-                    } else // Normal white checker. 
+                    } else // Normal white checker.
                      if (from.row() - to.row() == 1) {
 
                             if (GameSearch.validWhiteMove(from, to, pan.boardO)) {
@@ -706,46 +487,5 @@ public class CheckersFrame extends JFrame implements MouseListener, MouseMotionL
             boardHistory.remove(k);
         }
     }
-
-    // private void importGamefromSavegames(String toString) {
-    //     ArrayList<Board> importedHistory = new ArrayList<>();
-    //     try {
-    //         FileInputStream fileIn = new FileInputStream("savegames/" + toString);
-    //         ObjectInputStream in = new ObjectInputStream(fileIn);
-    //         importedHistory = (ArrayList<Board>) in.readObject();
-    //         boardHistory = importedHistory;
-    //         currentPositionInBoradHistory = boardHistory.size() - 1;
-    //         pan.boardO = boardHistory.get(boardHistory.size() - 1);
-    //         pan.repaint();
-    //         in.close();
-    //         fileIn.close();
-    //     } catch (IOException i) {
-    //         i.printStackTrace();
-    //         return;
-    //     } catch (ClassNotFoundException c) {
-    //         c.printStackTrace();
-    //         return;
-    //     }
-    // }
-
-    // private void SaveHistoryOfGame(String toString) throws FileNotFoundException, IOException {
-    //     FileOutputStream fos = new FileOutputStream("savegames/" + toString + ".game");
-
-    //     // création d'un "flux objet" avec le flux fichier
-    //     ObjectOutputStream os = new ObjectOutputStream(fos);
-    //     try {
-    //         //écriture de l'objet dans le flux de sortie
-    //         os.writeObject(boardHistory);
-    //         // vider le tampon
-    //         os.flush();
-    //     } finally {
-    //         //fermeture des flux
-    //         try {
-    //             os.close();
-    //         } finally {
-    //             fos.close();
-    //         }
-    //     }
-    // }
 
 }

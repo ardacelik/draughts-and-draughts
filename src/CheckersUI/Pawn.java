@@ -3,10 +3,6 @@ package CheckersUI;
 import java.awt.Point;
 import javax.swing.ImageIcon;
 
-/**
- *
- * @author hamza
- */
 public class Pawn {
 
     Point point;
@@ -44,9 +40,9 @@ public class Pawn {
     public void setType(int type) {
         this.type = type;
     }
-    
+
     public  void movePawn(int from , int to){
-        
+
     }
 
 }
