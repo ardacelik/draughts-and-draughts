@@ -213,7 +213,6 @@ public class CheckersFrame extends JFrame implements MouseListener, MouseMotionL
     @Override
     public void mouseReleased(MouseEvent e) {
 
-      System.out.println("mouseReleased");
       System.out.println(clickedHere);
         if (alreadyMoved) {
 
@@ -249,11 +248,8 @@ public class CheckersFrame extends JFrame implements MouseListener, MouseMotionL
     //draws piece movement while dragging
     @Override
     public void mouseDragged(MouseEvent e) {
-      System.out.println("mouseDragged");
         alreadyMoved = true;
         setCursor(Cursor.CROSSHAIR_CURSOR);
-        pan.possiblemovesindex.clear();
-        pan.bestmovesfromhelp.clear();
 
         if (!moving) {
             for (int i = 0; i < pan.pawns.size(); i++) {
