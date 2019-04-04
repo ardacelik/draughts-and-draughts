@@ -21,7 +21,7 @@ public class CheckersPanel extends JPanel {
     final static String BOARD = "/assets/board.png";
     final static String WHITE_KING = "/assets/white_pawn_king.png";
     final static String BLACK_KING = "/assets/black_pawn_king.png";
-    final static String GREEN_INDICATOR = "/assets/green_indicator.png";
+
 
     ImageIcon  black_pawn, white_pawn, board, board1, board2, black_king, white_king, indicatePosition;
     boolean newBoard = true;
@@ -41,13 +41,13 @@ public class CheckersPanel extends JPanel {
 
     public CheckersPanel() {
 
-        // initialiser le damier
+
         initAllpositions();
-        // les images
+
         black_pawn = new ImageIcon(getClass().getResource(BLACK_PAWN));
         white_pawn = new ImageIcon(getClass().getResource(WHITE_PAWN));
         board = new ImageIcon(getClass().getResource(BOARD));
-        indicatePosition = new ImageIcon(getClass().getResource(GREEN_INDICATOR));
+      //  indicatePosition = new ImageIcon(getClass().getResource(GREEN_INDICATOR));
         white_king = new ImageIcon(getClass().getResource(WHITE_KING));
         black_king = new ImageIcon(getClass().getResource(BLACK_KING));
         boardO.initialize();
@@ -100,12 +100,12 @@ public class CheckersPanel extends JPanel {
     }
 
     public void drawPawnAtPostion(Graphics g, int pos, int player) {
-        if (player == 1)// les noires
+        if (player == 1)
         {
             Pawn p = new Pawn(allBoardPoints.get(pos), black_pawn);
             p.posindex = pos;
             pawns.add(p);
-        } else { // les blancs
+        } else {
             Pawn p = new Pawn(allBoardPoints.get(pos), white_pawn);
             p.posindex = pos;
             pawns.add(p);

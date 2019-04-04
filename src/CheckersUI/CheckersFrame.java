@@ -35,31 +35,51 @@ import javax.swing.JRadioButtonMenuItem;
 
 public class CheckersFrame extends JFrame implements MouseListener, MouseMotionListener, KeyListener {
 
+    //pan: CheckerPanel type, stores functions to draw to board
     CheckersPanel pan;
+
+    //multipleJumpsChecker: CheckerPosition type, maintain if multiple jumps must be completed
     private CheckerPosition multipleJumpsChecker = null;
+
+    //boardHistory: ArrayList of Board type, stores history of board states
     ArrayList<Board> boardHistory = new ArrayList<Board>();
+
+    //clickedHere: int type, of selected pawn index
     private int clickedHere = 0;
-    int FromPawnIndex = 0;
+
+
     int ToPawnIndex = 0;
+
+    //constant ints defining colour
     private int userColor = CheckerPosition.WHITE;
     private int computerColor = CheckerPosition.BLACK;
-    //private Coordinate from;
-    private int thinkDepth = 2;
-    private boolean alreadyMoved;
-    private boolean moving;
-    //private int nbrBacks = 0;
-    static AudioClip music;
-    //private int nbrBack = 0;
-    //private int nbrForward = 0;
-    private boolean isBack = false;
-    String output = "";
-    int currentPositionInBoradHistory = 0;
-    private boolean isForward = false;
-    static int algorithm = 1;
-   // boolean playMusic = true;
 
+
+
+    //thinkDepth: int type: defining search depth; changes upon difficulty change
+    private int thinkDepth = 2;
+
+    //alreadyMoved: boolean type, used to determine mouse/click/drag behaviour
+    private boolean alreadyMoved;
+
+    //drawing stuff
+    private boolean moving;
+
+
+  //  private boolean isBack = false;
+
+    //output: String type used for output of text to console
+    String output = "";
+
+
+    //algorithm: int type: used to specify algorithm use (1 is minimax, other is minimax with AB)
+    static int algorithm = 1;
+
+    //menu bar
     JMenuBar menuBar;
 
+
+    //initializes entire checkers frame
     public CheckersFrame() {
 
         Toolkit toolkit = getToolkit();
@@ -80,6 +100,7 @@ public class CheckersFrame extends JFrame implements MouseListener, MouseMotionL
 
     }
 
+    //creates the menu bar E.g. algorithm selection/difficulty
     public void createMenu() {
         //Create the menu bar.
         menuBar = new JMenuBar();
@@ -184,61 +205,18 @@ public class CheckersFrame extends JFrame implements MouseListener, MouseMotionL
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-
-
-        int test = 0;
-        for (int i = 0; i < pan.allBoardPoints.size(); i++) {
-            if (e.getX() > (int) pan.allBoardPoints.get(i).getX()
-                    && e.getX() < (int) (pan.allBoardPoints.get(i).getX() + 75)
-                    && e.getY() - 40 < (int) (pan.allBoardPoints.get(i).getY() + 75)
-                    && e.getY() - 40 > (int) (pan.allBoardPoints.get(i).getY())) {
-                test = (i + 1);
-                break;
-            }
-        }
-
-        for (int i = 0; i < pan.pawns.size(); i++) {
-
-            if (e.getX() > (int) pan.pawns.get(i).point.getX() && e.getX() < (int) (pan.pawns.get(i).point.getX() + 75)
-                    && e.getY() - 27 < (int) (pan.pawns.get(i).point.getY() + 75) && e.getY() - 27 > (int) (pan.pawns.get(i).point.getY())) {
-                clickedHere = i;
-                break;
-            }
-        }
-
-        MoveList validMoves;
-        validMoves = GameSearch.findAllValidMoves(pan.boardO, userColor);
-        pan.possiblemovesindex.clear();
-        for (int i = 0; i < validMoves.size(); i++) {
-            if ((test - 1) >= 0 && pan.boardO.getChecker(new Coordinate(test)) != null && validMoves.get(i).getChecker().getPosition() == pan.boardO.getChecker(new Coordinate(test)).getPosition()) {
-                pan.possiblemovesindex.add(validMoves.get(i).getDestination().get());
-                pan.repaint();
-            }
-
-        }
-
-        if (e.getX() > 690 && e.getX() < 690 + 54 && e.getY() - 27 > 530 && e.getY() - 27 < 530 + 54) {
-            pan.pawns.clear();
-            pan.boardO.initialize();
-            boardHistory.clear();
-            currentPositionInBoradHistory = 0;
-            isBack = false;
-            pan.repaint();
-        }
-
-    }
-
-    @Override
     public void mousePressed(MouseEvent e) {
 
     }
 
+    //Event handler for release of pawn, used to determine piece movement on board
     @Override
     public void mouseReleased(MouseEvent e) {
 
+      System.out.println("mouseReleased");
+      System.out.println(clickedHere);
         if (alreadyMoved) {
-            FromPawnIndex = clickedHere + 1;
+
             for (int i = 0; i < pan.allBoardPoints.size(); i++) {
 
                 if (e.getX() > (int) pan.allBoardPoints.get(i).getX() && e.getX() < (int) (pan.allBoardPoints.get(i).getX() + 75)
@@ -268,8 +246,10 @@ public class CheckersFrame extends JFrame implements MouseListener, MouseMotionL
     public void mouseExited(MouseEvent e) {
     }
 
+    //draws piece movement while dragging
     @Override
     public void mouseDragged(MouseEvent e) {
+      System.out.println("mouseDragged");
         alreadyMoved = true;
         setCursor(Cursor.CROSSHAIR_CURSOR);
         pan.possiblemovesindex.clear();
@@ -296,12 +276,14 @@ public class CheckersFrame extends JFrame implements MouseListener, MouseMotionL
         }
 
     }
-
+    @Override
+    public void mouseClicked(MouseEvent e) {}
     @Override
     public void mouseMoved(MouseEvent e) {
 
     }
 
+    //logic to move user piece and instantiate AI move
     public void moveUser(Coordinate from, Coordinate to) {
         pan.turn = "your turn";
 
@@ -311,16 +293,7 @@ public class CheckersFrame extends JFrame implements MouseListener, MouseMotionL
             outputText("Invalid move.");
         } else if (move.isJump()) {
 
-            if (isBack) {
-                int currentBoard = 0;
-                currentBoard = currentPositionInBoradHistory;
-                removeBordsAfter(currentPositionInBoradHistory + 1);
-                isBack = false;
-                currentPositionInBoradHistory = boardHistory.size() + 1;
-            } else if (boardHistory.size() == 0) {
-                currentPositionInBoradHistory = 0;
-                boardHistory.add(pan.boardO);
-            }
+
             pan.boardO = GameSearch.executeUserJump(move, pan.boardO);
             multipleJumpsChecker = pan.boardO.getChecker(move.getDestination());
             if (mandatoryJump(multipleJumpsChecker, pan.boardO)) {
@@ -333,23 +306,13 @@ public class CheckersFrame extends JFrame implements MouseListener, MouseMotionL
                 outputText("Invalid move. If you can jump, you must.");
             } else {
 
-                if (isBack) {
-                    int currentBoard = 0;
-                    currentBoard = currentPositionInBoradHistory;
-                    removeBordsAfter(currentPositionInBoradHistory + 1);
-                    isBack = false;
-
-                    currentPositionInBoradHistory = boardHistory.size() + 1;
-                } else if (boardHistory.size() == 0) {
-                    currentPositionInBoradHistory = 0;
-                    boardHistory.add(pan.boardO);
-                }
                 pan.boardO = GameSearch.executeMove(move, pan.boardO);
                 pan.user_move = move.toString();
                 computerMoves();
             }
     }
 
+    //helper function logic used to validate user move
     public Move validateUserMove(Coordinate from, Coordinate to) {
         Move move = null;
         CheckerPosition checker = pan.boardO.getChecker(from);
@@ -417,7 +380,7 @@ public class CheckersFrame extends JFrame implements MouseListener, MouseMotionL
         }
     }
 
-    // The computer thinks....
+    // AI logic
     public void computerMoves() {
         pan.turn = " Computer turn ";
         MoveList validMoves = GameSearch.findAllValidMoves(pan.boardO, computerColor);
@@ -442,10 +405,6 @@ public class CheckersFrame extends JFrame implements MouseListener, MouseMotionL
 
             pan.boardO = GameSearch.executeMove(move, pan.boardO);
 
-            if (!isBack && !isForward) {
-                boardHistory.add(pan.boardO);
-                currentPositionInBoradHistory = boardHistory.size() - 1;
-            }
             MoveIterator iterator = pan.boardO.getHistory().getIterator();
             String moves = "";
             while (iterator.hasNext()) {
@@ -481,11 +440,6 @@ public class CheckersFrame extends JFrame implements MouseListener, MouseMotionL
     public void keyReleased(KeyEvent e) {
     }
 
-    private void removeBordsAfter(int i) {
-        int taille = boardHistory.size();
-        for (int k = taille - 1; k >= i; k--) {
-            boardHistory.remove(k);
-        }
-    }
+
 
 }
